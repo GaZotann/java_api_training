@@ -12,13 +12,14 @@ import org.junit.jupiter.api.Assertions;
 
 public class CallHandlerTest {
     @Test
-    void testCallHandler(){
+    public void testCallHandler(){
         try{
             ServeurHTTP testServeur = new ServeurHTTP(9876);
             testServeur.create();
             HttpClient newclient = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9876/ping"))
+                .headers("")
                 .build();
             CompletableFuture<HttpResponse<String>> completableFuture = newclient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             HttpResponse<String> response = completableFuture.join();
