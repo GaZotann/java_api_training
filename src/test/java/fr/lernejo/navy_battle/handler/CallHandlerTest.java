@@ -24,8 +24,8 @@ public class CallHandlerTest {
                 .build();
             CompletableFuture<HttpResponse<String>> completableFuture = newclient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             HttpResponse<String> response = completableFuture.join();
-            Assertions.assertEquals(response.statusCode(),200);
-            Assertions.assertEquals(response.body(), "OK");
+            Assertions.assertEquals(200,response.statusCode());
+            Assertions.assertEquals("OK",response.body() );
         }catch (Exception e){}
 
     }

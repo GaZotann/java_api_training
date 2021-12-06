@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 
 public class LauncherTest {
+    private final Launcher launcher = new Launcher();
     @Test
     void mainTest1(){
         org.assertj.core.api.Assertions.assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Launcher.main(new String[] {})).withMessage("Il manque des arguments");
