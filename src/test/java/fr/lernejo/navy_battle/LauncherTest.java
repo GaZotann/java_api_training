@@ -15,9 +15,9 @@ public class LauncherTest {
     void mainTest2(){
         org.assertj.core.api.Assertions.assertThatNoException().isThrownBy(() -> Launcher.main(new String[] {"9786"}));
     }
-    @Test
+    /*@Test
     void mainTest3(){
         String[] args = {"9876"};
         org.assertj.core.api.Assertions.assertThatNoException().isThrownBy(() -> new ServeurHTTP(9876).create());
-    }
+    }*/
 }

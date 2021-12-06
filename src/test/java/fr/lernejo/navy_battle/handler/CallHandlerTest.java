@@ -12,15 +12,19 @@ import java.net.http.HttpResponse;
 import java.util.concurrent.CompletableFuture;
 import org.junit.jupiter.api.Assertions;
 
+
 public class CallHandlerTest {
+    private final CallHandler callHandler = new CallHandler();
     @Test
-    void testCallHandler(){
+    void testCallHandler1(){
         try{
             ServeurHTTP testServeur = new ServeurHTTP(9876);
             testServeur.create();
             HttpClient newclient = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9876/ping"))
+                .header("Content-Type", "text/plain; charset=UTF-8")
+                .POST(HttpRequest.BodyPublishers.ofString("start"))
                 .build();
             CompletableFuture<HttpResponse<String>> completableFuture = newclient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             HttpResponse<String> response = completableFuture.join();
