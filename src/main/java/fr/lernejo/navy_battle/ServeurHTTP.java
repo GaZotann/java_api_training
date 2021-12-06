@@ -1,5 +1,6 @@
 package fr.lernejo.navy_battle;
 
+import com.sun.jdi.connect.Connector;
 import com.sun.net.httpserver.HttpServer;
 import fr.lernejo.navy_battle.handler.CallHandler;
 
@@ -21,5 +22,8 @@ public class ServeurHTTP {
         httpServer.setExecutor(Executors.newFixedThreadPool(1));
         httpServer.createContext("/ping", new CallHandler());
         httpServer.start();
+        if(httpServer.getAddress().equals(null)){
+            throw new IllegalArgumentException("Le serveur n'a pas réussi à démarrer");
+        }
     }
 }

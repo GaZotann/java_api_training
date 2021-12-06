@@ -9,5 +9,8 @@ public class Launcher {
                serveurHTTP.create();
            }catch (Exception e){}
         }
+        if(args.length <= 0){
+            System.out.println("Arguments invalide");
+        }
     }
 }

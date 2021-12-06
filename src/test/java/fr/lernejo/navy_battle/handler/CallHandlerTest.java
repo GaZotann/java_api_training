@@ -1,6 +1,8 @@
 package fr.lernejo.navy_battle.handler;
 
+import com.sun.net.httpserver.HttpHandler;
 import fr.lernejo.navy_battle.ServeurHTTP;
+import com.sun.net.httpserver.HttpExchange;
 import org.junit.Test;
 
 import java.net.URI;
@@ -12,14 +14,13 @@ import org.junit.jupiter.api.Assertions;
 
 public class CallHandlerTest {
     @Test
-    public void testCallHandler(){
+    void testCallHandler(){
         try{
             ServeurHTTP testServeur = new ServeurHTTP(9876);
             testServeur.create();
             HttpClient newclient = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9876/ping"))
-                .headers("")
                 .build();
             CompletableFuture<HttpResponse<String>> completableFuture = newclient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             HttpResponse<String> response = completableFuture.join();
