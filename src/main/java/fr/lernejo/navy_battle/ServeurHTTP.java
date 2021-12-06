@@ -22,8 +22,5 @@ public class ServeurHTTP {
         httpServer.setExecutor(Executors.newFixedThreadPool(1));
         httpServer.createContext("/ping", new CallHandler());
         httpServer.start();
-        if(httpServer.getAddress().equals(null)){
-            throw new IllegalArgumentException("Le serveur n'a pas réussi à démarrer");
-        }
     }
 }
