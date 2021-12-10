@@ -22,7 +22,7 @@ public class ServeurHTTP {
         HttpServer httpServer = HttpServer.create(newSocket, 0);
         httpServer.setExecutor(Executors.newFixedThreadPool(1));
         httpServer.createContext("/ping", new CallHandler());
-        httpServer.createContext("api/game/start", new StartHandler());
+        httpServer.createContext("/api/game/start", new StartHandler());
         httpServer.start();
     }
 }

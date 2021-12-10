@@ -1,8 +1,6 @@
 package fr.lernejo.navy_battle.handler;
 
-import com.sun.net.httpserver.HttpHandler;
 import fr.lernejo.navy_battle.ServeurHTTP;
-import com.sun.net.httpserver.HttpExchange;
 import org.junit.Test;
 
 import java.net.URI;

@@ -9,6 +9,9 @@ public class Launcher {
             try {
                ServeurHTTP serveurHTTP = new ServeurHTTP(port);
                serveurHTTP.create();
+
+               ServeurClient client = new ServeurClient(9875);
+               client.send("http://localhost:" + port);
            }catch (Exception e){}
         }
         if (args.length <= 0){
