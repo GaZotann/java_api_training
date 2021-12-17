@@ -4,6 +4,7 @@ import com.sun.jdi.connect.Connector;
 import com.sun.net.httpserver.HttpServer;
 import fr.lernejo.navy_battle.handler.CallHandler;
 import fr.lernejo.navy_battle.handler.StartHandler;
+import fr.lernejo.navy_battle.handler.FireHandler;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -23,6 +24,7 @@ public class ServeurHTTP {
         httpServer.setExecutor(Executors.newFixedThreadPool(1));
         httpServer.createContext("/ping", new CallHandler());
         httpServer.createContext("/api/game/start", new StartHandler());
+        httpServer.createContext("/api/game/fire", new FireHandler());
         httpServer.start();
     }
 }

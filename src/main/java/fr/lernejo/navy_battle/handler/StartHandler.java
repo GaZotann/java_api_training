@@ -14,7 +14,6 @@ public class StartHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         String body = "";
         int code = 400;
-        //if(!"POST".equals(exchange.getRequestMethod())){code = 404;}
         if(!exchange.getRequestMethod().equals("POST")){code = 404;}
         else if(checkJson(exchange.getRequestBody())){
             body = createbody(exchange);
