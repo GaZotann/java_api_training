@@ -7,11 +7,11 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class CallHandler implements HttpHandler {
-
+    public String body = "OK";
+    public int code = 200;
     @Override
     public void handle(HttpExchange exchange) throws IOException{
-        String body = "OK";
-        exchange.sendResponseHeaders(200, body.length());
+        exchange.sendResponseHeaders(code, body.length());
         try (OutputStream os = exchange.getResponseBody()){
             os.write(body.getBytes());
         }
