@@ -21,13 +21,14 @@ public class CallHandlerTest {
             HttpClient newclient = HttpClient.newHttpClient();
             HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:9876/ping"))
-                .header("Content-Type", "text/plain; charset=UTF-8")
-                .POST(HttpRequest.BodyPublishers.ofString("start"))
+                .setHeader("Accept", "application/json")
+                .setHeader("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString("ping!"))
                 .build();
             CompletableFuture<HttpResponse<String>> completableFuture = newclient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
             HttpResponse<String> response = completableFuture.join();
             Assertions.assertEquals(200,response.statusCode());
-            Assertions.assertEquals("OK",response.body() );
+            Assertions.assertEquals("OK",response.body());
         }catch (Exception e){}
 
     }
