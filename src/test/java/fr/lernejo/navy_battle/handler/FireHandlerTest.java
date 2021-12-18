@@ -2,7 +2,7 @@ package fr.lernejo.navy_battle.handler;
 
 import fr.lernejo.navy_battle.ServeurClient;
 import fr.lernejo.navy_battle.ServeurHTTP;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Assertions;
 
 import java.net.URI;
@@ -27,9 +27,6 @@ public class FireHandlerTest {
                 .build();
             int statusCodePUT = client.sendAsync(requestPUT, HttpResponse.BodyHandlers.ofString()).thenApplyAsync(HttpResponse::statusCode).join();
             Assertions.assertEquals(statusCodePUT,202);
-
-
         }catch (Exception e){}
-
     }
 }
