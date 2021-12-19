@@ -35,8 +35,7 @@ public class StartHandler implements HttpHandler {
             String value;
             while ((value = read.readLine()) != null){futurJson.append(value);}
             JSONObject json = new JSONObject(futurJson.toString());
-            if(json != null)
-                if(json.getString("id") != null && json.getString("url") != null && json.getString("message") != null){return true;}
+            return true;
         }catch(Exception e){}
         return false;
     }
