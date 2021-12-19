@@ -15,14 +15,14 @@ import java.net.http.HttpResponse;
 import java.io.IOException;
 
 public class FireHandler implements HttpHandler {
+    private String body = "";
+    private int code = 400;
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        String body = "";
-        int code = 400;
-        if(!exchange.getRequestMethod().equals("GET")){code = 404;}
+        if(!exchange.getRequestMethod().equals("GET")){this.code = 404;}
         else{
-            code = 202;
-            body = createbody();
+            this.code = 202;
+            this.body = createbody();
         }
         exchange.sendResponseHeaders(code, body.length());
         try(OutputStream outputStream = exchange.getResponseBody()) {
@@ -31,7 +31,7 @@ public class FireHandler implements HttpHandler {
         System.out.println(body + code);
     }
 
-    private String createbody(){
+    public String createbody(){
         JSONObject object = new JSONObject();
         object.put("consequence", "sunk");
         object.put("shipLeft", "true");

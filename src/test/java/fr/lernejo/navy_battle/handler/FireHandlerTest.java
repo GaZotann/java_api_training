@@ -9,24 +9,45 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.concurrent.CompletableFuture;
 
 public class FireHandlerTest {
     private final FireHandler fireHandler = new FireHandler();
     @Test
-    void HandleTest(){
-        try {
-            ServeurClient clientServeur = new ServeurClient(9876);
-            ServeurHTTP serveur = new ServeurHTTP(9875);
-            serveur.create();
-            HttpClient client = HttpClient.newHttpClient();
-
-            HttpRequest requestPUT = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:9097/api/game/fire"))
-                .header("Accept", "application/json")
-                .PUT(HttpRequest.BodyPublishers.ofString("test"))
-                .build();
-            int statusCodePUT = client.sendAsync(requestPUT, HttpResponse.BodyHandlers.ofString()).thenApplyAsync(HttpResponse::statusCode).join();
-            Assertions.assertEquals(statusCodePUT,202);
-        }catch (Exception e){}
+    void handle_false() throws Exception, InterruptedException{
+        ServeurHTTP serveurHTTP = new ServeurHTTP(9090);
+        serveurHTTP.create();
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:9090/api/game/fire"))
+            .headers("Accept", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString("POST"))
+            .build();
+        CompletableFuture<HttpResponse<String>> completableFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        completableFuture.thenApplyAsync(HttpResponse::headers);
+        HttpResponse<String> response = completableFuture.join();
+        Assertions.assertEquals(response.statusCode(), 404);
     }
+    @Test
+    void handle_true() throws Exception, InterruptedException{
+        ServeurHTTP serveurHTTP = new ServeurHTTP(9091);
+        serveurHTTP.create();
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create("http://localhost:9091/api/game/fire"))
+            .headers("Accept", "application/json")
+            .GET()
+            .build();
+        CompletableFuture<HttpResponse<String>> completableFuture = client.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+        completableFuture.thenApplyAsync(HttpResponse::headers);
+        HttpResponse<String> response = completableFuture.join();
+        Assertions.assertEquals(response.body(), "{\"consequence\":\"sunk\",\"shipLeft\":\"true\"}");
+        Assertions.assertEquals(response.statusCode(), 202);
+    }
+
+    @Test
+    void CreatebodyTest(){
+        Assertions.assertEquals(fireHandler.createbody(), "{\"consequence\":\"sunk\",\"shipLeft\":\"true\"}");
+    }
+
 }

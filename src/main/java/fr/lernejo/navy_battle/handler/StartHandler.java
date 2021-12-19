@@ -3,6 +3,7 @@ package fr.lernejo.navy_battle.handler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.jetbrains.annotations.VisibleForTesting;
 import org.json.JSONObject;
 import java.util.UUID;
 import java.io.*;
@@ -10,23 +11,24 @@ import java.nio.charset.Charset;
 
 
 public class StartHandler implements HttpHandler {
+    private String body = "";
+    private int code = 400;
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        String body = "";
-        int code = 400;
-        if(!exchange.getRequestMethod().equals("POST")){code = 404;}
+        if(!exchange.getRequestMethod().equals("POST")){this.code = 404;}
         else if(checkJson(exchange.getRequestBody())){
-            body = createbody(exchange);
-            code = 202;
+            this.body = createbody(exchange);
+            this.code = 202;
         }
-        exchange.sendResponseHeaders(code, body.length());
+        exchange.sendResponseHeaders(this.code, this.body.length());
         try(OutputStream outputStream = exchange.getResponseBody()) {
-            outputStream.write(body.getBytes());
+            outputStream.write(this.body.getBytes());
         }
-        System.out.println(body + code);
+        System.out.println(this.body + this.code);
     }
 
-    private boolean checkJson(InputStream inputStream) {
+    public boolean checkJson(InputStream inputStream) {
         try {
             BufferedReader read = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
             StringBuilder futurJson = new StringBuilder();
