@@ -11,21 +11,20 @@ import java.nio.charset.Charset;
 
 
 public class StartHandler implements HttpHandler {
-    private String body = "";
-    private int code = 400;
-
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        if(!exchange.getRequestMethod().equals("POST")){this.code = 404;}
+        String body = "";
+        int code = 400;
+        if(!exchange.getRequestMethod().equals("POST")){code = 404;}
         else if(checkJson(exchange.getRequestBody())){
-            this.body = createbody(exchange);
-            this.code = 202;
+            body = createbody(exchange);
+            code = 202;
         }
-        exchange.sendResponseHeaders(this.code, this.body.length());
+        exchange.sendResponseHeaders(code, body.length());
         try(OutputStream outputStream = exchange.getResponseBody()) {
-            outputStream.write(this.body.getBytes());
+            outputStream.write(body.getBytes());
         }
-        System.out.println(this.body + this.code);
+        System.out.println(body + code);
     }
 
     public boolean checkJson(InputStream inputStream) {

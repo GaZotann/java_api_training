@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 public class CallHandler implements HttpHandler {
-    public String body = "OK";
-    public int code = 200;
+    private final String body = "OK";
+    private final int code = 200;
     @Override
     public void handle(HttpExchange exchange) throws IOException{
         exchange.sendResponseHeaders(code, body.length());
